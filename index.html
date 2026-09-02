@@ -89,6 +89,19 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   h1,h2,h3{font-family:var(--display); text-transform:uppercase; letter-spacing:.01em; line-height:1.05; font-weight:400;}
   .section{padding:88px 0;}
   .section-head{text-align:center; max-width:720px; margin:0 auto 48px;}
+  /* Versión compacta: usada en "Qué vas a recibir" y "Bonos" para ocupar menos espacio vertical */
+  .section-compact{padding:52px 0;}
+  .section-compact .section-head{margin-bottom:26px;}
+  .section-compact .cards-grid{gap:10px;}
+  .section-compact .rcard .img-wrap{aspect-ratio:4/3;}
+  .section-compact .rcard .img-caption{padding:10px 10px 12px;}
+  .section-compact .rcard .num{font-size:15px; margin-bottom:2px;}
+  .section-compact .bonus-grid{gap:12px;}
+  .section-compact .bonus-card{padding:16px;}
+  .section-compact .bonus-img-wrap{aspect-ratio:16/9; margin-bottom:10px;}
+  .section-compact .bonus-card .val{margin-top:6px; font-size:11.5px;}
+  .section-compact .bonus-card h3{font-size:15.5px; margin:4px 0 5px;}
+  .section-compact .bonus-card p{font-size:12.5px;}
   .section-head h2{font-size:clamp(28px,4.4vw,44px); margin-top:14px;}
   .section-head p{color:var(--muted); margin-top:14px; font-size:16.5px;}
   .accent{color:var(--lime);}
@@ -102,21 +115,35 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
     background:rgba(6,10,6,.85); backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
   }
-  .topbar .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
-  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-size:20px; letter-spacing:.03em;}
+  .topbar-main{display:flex; align-items:center; height:56px; gap:12px; position:relative;}
+  @media(min-width:640px){ .topbar-main{height:62px;} }
+  .topbar-main .btn{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-size:20px; letter-spacing:.03em; flex-shrink:0;}
   .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--lime); box-shadow:0 0 12px var(--lime);}
-  .brand-logo{height:34px; width:auto; display:block;}
+  .brand-logo{height:30px; width:auto; display:block;}
+  @media(min-width:640px){ .brand-logo{height:34px;} }
   .brand-logo.footer-logo{height:46px;}
+  /* Barra de urgencia: fila propia, siempre visible (también en mobile) */
+  .topbar-urgency-row{border-top:1px solid var(--line); background:rgba(166,255,30,.05);}
+  .topbar-urgency-row .wrap{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:6px 16px; flex-wrap:wrap; text-align:center;
+  }
   .topbar-urgency{
-    display:none; align-items:center; gap:8px; font-size:12.5px; color:var(--muted); font-weight:600;
+    display:flex; align-items:center; gap:8px; font-size:10.5px; color:var(--muted); font-weight:600;
+    flex-wrap:wrap; justify-content:center;
   }
   .topbar-urgency b{color:var(--lime); font-family:var(--display); font-weight:400; letter-spacing:.03em;}
   .topbar-timer{
     display:flex; align-items:center; gap:1px;
-    font-family:var(--display); font-size:13px; color:var(--lime); letter-spacing:.02em;
-    background:var(--lime-dark); padding:5px 11px; border-radius:100px; flex-shrink:0;
+    font-family:var(--display); font-size:12px; color:var(--lime); letter-spacing:.02em;
+    background:var(--lime-dark); padding:4px 10px; border-radius:100px; flex-shrink:0;
   }
-  @media(min-width:640px){ .topbar-urgency{display:flex;} }
+  @media(min-width:640px){
+    .topbar-urgency{font-size:12.5px;}
+    .topbar-timer{font-size:13px; padding:5px 11px;}
+    .topbar-urgency-row .wrap{padding:7px 20px;}
+  }
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
     padding:14px 26px; border-radius:100px;
@@ -132,9 +159,8 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   .btn-ghost{
     border:1px solid var(--line); color:var(--ink); background:rgba(255,255,255,.02);
   }
-  .btn-sm{padding:10px 18px; font-size:13.5px;}
-  .topbar .btn{display:none;}
-  @media(min-width:760px){ .topbar .btn{display:inline-flex;} }
+  .btn-sm{padding:8px 15px; font-size:12px; flex-shrink:0;}
+  @media(max-width:380px){ .btn-sm{padding:7px 12px; font-size:11px;} }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -416,12 +442,17 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   .carousel-track-wrap{overflow:hidden;}
   .carousel-track{display:flex; gap:14px; transition:transform .4s ease;}
   .cslide{
-    flex:0 0 calc((100% - 28px)/3); min-width:calc((100% - 28px)/3);
+    flex:0 0 calc((100% - 14px)/2); min-width:calc((100% - 14px)/2);
     aspect-ratio:3/4; position:relative; background:linear-gradient(160deg,#0d150e,#070b07);
     border-radius:16px; overflow:hidden; border:1px solid var(--line);
   }
   @media(max-width:640px){
-    .cslide{flex:0 0 calc((100% - 14px)/2); min-width:calc((100% - 14px)/2);}
+    .cslide{flex:0 0 100%; min-width:100%;}
+  }
+  /* Carrusel de testimonios: mantiene 3 por vez (imágenes de captura, más pequeñas) */
+  #testiTrack .cslide{flex:0 0 calc((100% - 28px)/3); min-width:calc((100% - 28px)/3);}
+  @media(max-width:640px){
+    #testiTrack .cslide{flex:0 0 calc((100% - 14px)/2); min-width:calc((100% - 14px)/2);}
   }
   .cslide img, .cslide video{width:100%; height:100%; object-fit:cover;}
   .cslide .media-fallback{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; padding:14px; text-align:center;}
@@ -600,15 +631,19 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
 
 <!-- =============== TOPBAR =============== -->
 <div class="topbar">
-  <div class="wrap">
+  <div class="wrap topbar-main">
     <a href="#" class="brand"><img src="images/logo-icon.png" alt="Projeto Jogador" class="brand-logo"></a>
-    <div class="topbar-urgency">
-      <span>Oferta especial, válida solo hoy, hasta las 23:59</span>
-      <div class="topbar-timer">
-        <span id="tbHour">05</span>:<span id="tbMin">07</span>:<span id="tbSec">47</span>
+    <a href="#oferta" class="btn btn-primary btn-sm">Quiero evolucionar ahora</a>
+  </div>
+  <div class="topbar-urgency-row">
+    <div class="wrap">
+      <div class="topbar-urgency">
+        <span>Oferta especial, válida solo hoy, hasta las 23:59</span>
+        <div class="topbar-timer">
+          <span id="tbHour">05</span>:<span id="tbMin">07</span>:<span id="tbSec">47</span>
+        </div>
       </div>
     </div>
-    <a href="#oferta" class="btn btn-primary btn-sm">Quiero evolucionar ahora</a>
   </div>
 </div>
 
@@ -658,8 +693,30 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   </div>
 </header>
 
-<!-- =============== 2. O QUE VOCÊ VAI RECEBER =============== -->
-<section class="section dark-green-bg" id="o-que-recebe">
+<!-- =============== 2. EXEMPLOS DO MATERIAL =============== -->
+<section class="section section-light" id="exemplos">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" style="justify-content:center;">Por dentro del material</span>
+      <h2>Mira un poco de lo que <span class="accent">te espera</span></h2>
+      <p>Capturas y videos reales del contenido que recibes al asegurar tu acceso.</p>
+    </div>
+
+    <div class="carousel reveal">
+      <div class="carousel-track-wrap">
+        <div class="carousel-track" id="carouselTrack"></div>
+      </div>
+      <div class="carousel-nav">
+        <button class="cnav-btn" id="cPrev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <div class="cdots" id="cDots"></div>
+        <button class="cnav-btn" id="cNext"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 3. O QUE VOCÊ VAI RECEBER =============== -->
+<section class="section section-compact dark-green-bg" id="o-que-recebe">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow" style="justify-content:center;">Paquete completo</span>
@@ -671,7 +728,7 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- =============== 3. POR QUE ESCOLHER =============== -->
+<!-- =============== 4. POR QUE ESCOLHER =============== -->
 <section class="section section-light" id="por-que-pj">
   <div class="wrap">
     <div class="section-head reveal">
@@ -717,8 +774,8 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- =============== 4. BÔNUS =============== -->
-<section class="section bonus-strip dark-green-bg">
+<!-- =============== 5. BÔNUS =============== -->
+<section class="section section-compact bonus-strip dark-green-bg">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow" style="justify-content:center;">Solo hoy, de bono</span>
@@ -761,7 +818,28 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- =============== 5. GARANTIA =============== -->
+<!-- =============== 6. DEPOIMENTOS =============== -->
+<section class="section section-light" id="depoimentos">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" style="justify-content:center;">Quienes ya entrenan con el PJ</span>
+      <h2>Resultado de quienes <span class="accent">dieron el paso</span></h2>
+    </div>
+
+    <div class="carousel reveal">
+      <div class="carousel-track-wrap">
+        <div class="carousel-track" id="testiTrack"></div>
+      </div>
+      <div class="carousel-nav">
+        <button class="cnav-btn" id="tPrev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <div class="cdots" id="tDots"></div>
+        <button class="cnav-btn" id="tNext"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== 7. GARANTIA =============== -->
 <section class="section section-light" id="garantia">
   <div class="wrap reveal">
     <div class="guarantee">
@@ -780,7 +858,7 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- =============== 6. OFERTA =============== -->
+<!-- =============== 8. OFERTA =============== -->
 <section class="section offer-section dark-green-bg" id="oferta">
   <div class="glow glow-c"></div>
   <div class="wrap" style="position:relative; z-index:1;">
@@ -807,7 +885,7 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
         <span class="oname">Módulo Fundamentos</span>
         <div class="oprice-row">
           <span class="ofrom">$37</span>
-          <span class="oprice">$5<span class="cents">.00</span></span>
+          <span class="oprice">$3<span class="cents">.90</span></span>
         </div>
         <span class="oinstallment">o en 12 cuotas con tarjeta</span>
         <ul class="offer-list">
@@ -825,7 +903,7 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
         <span class="oname">Paquete Completo</span>
         <div class="oprice-row">
           <span class="ofrom">$97</span>
-          <span class="oprice">$10<span class="cents">.00</span></span>
+          <span class="oprice">$6<span class="cents">.90</span></span>
         </div>
         <span class="oinstallment">o en 12 cuotas con tarjeta</span>
         <ul class="offer-list">
@@ -860,60 +938,16 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
     <button class="modal-close" id="modalClose">✕</button>
     <span class="eyebrow">Espera</span>
     <h3>Estás a punto de entrenar<br>a medias</h3>
-    <p>Por solo un poco más, llévate el <strong style="color:var(--ink)">Paquete Completo</strong> — +300 ejercicios, +500 videos y todos los bonos. Oferta exclusiva liberada solo ahora, en esta página.</p>
+    <p>Adquiere ahora con <strong style="color:var(--ink)">10% de descuento</strong> el <strong style="color:var(--ink)">Paquete Completo</strong> — +300 ejercicios, +500 videos y todos los bonos. Oferta exclusiva liberada solo ahora, en esta página.</p>
     <div class="modal-price-row">
-      <span class="from">$10</span>
-      <span class="to">$9</span>
+      <span class="from">$6.90</span>
+      <span class="to">$6.21</span>
     </div>
-    <div class="save-tag">Ahorras $1 y te llevas todo</div>
+    <div class="save-tag">10% de descuento solo por hoy</div>
     <a href="#" class="btn btn-primary" id="btnUpsellAccept">Sí, quiero el Paquete Completo</a>
-    <a href="#" class="modal-decline" id="btnUpsellDecline">No, quiero solo Fundamentos por $5</a>
+    <a href="#" class="modal-decline" id="btnUpsellDecline">No, quiero solo Fundamentos por $3.90</a>
   </div>
 </div>
-
-<!-- =============== 7. EXEMPLOS DO MATERIAL =============== -->
-<section class="section section-light" id="exemplos">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow" style="justify-content:center;">Por dentro del material</span>
-      <h2>Mira un poco de lo que <span class="accent">te espera</span></h2>
-      <p>Capturas y videos reales del contenido que recibes al asegurar tu acceso.</p>
-    </div>
-
-    <div class="carousel reveal">
-      <div class="carousel-track-wrap">
-        <div class="carousel-track" id="carouselTrack"></div>
-      </div>
-      <div class="carousel-nav">
-        <button class="cnav-btn" id="cPrev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <div class="cdots" id="cDots"></div>
-        <button class="cnav-btn" id="cNext"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =============== 8. DEPOIMENTOS =============== -->
-<section class="section dark-green-bg" id="depoimentos" style="border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow" style="justify-content:center;">Quienes ya entrenan con el PJ</span>
-      <h2>Resultado de quienes <span class="accent">dieron el paso</span></h2>
-    </div>
-
-    <div class="testi-grid reveal">
-      <div class="testi-card-img">
-        <img src="images/depoimento-1.jpg" alt="Testimonio de alumno" onerror="this.closest('.testi-card-img').style.display='none';">
-      </div>
-      <div class="testi-card-img">
-        <img src="images/depoimento-2.jpg" alt="Testimonio de alumno" onerror="this.closest('.testi-card-img').style.display='none';">
-      </div>
-      <div class="testi-card-img">
-        <img src="images/depoimento-3.jpg" alt="Testimonio de alumno" onerror="this.closest('.testi-card-img').style.display='none';">
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- =============== 9. FAQ =============== -->
 <section class="section section-light" id="faq">
@@ -959,9 +993,9 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
    CONFIGURAÇÃO — edite aqui preços, links e tempo do timer
    ========================================================= */
 const CONFIG = {
-  checkoutUrl17: "https://pay.hotmart.com/G107415375J",   // checkout do pacote Fundamentos (US$5)
-  checkoutUrl37: "https://pay.hotmart.com/O107370530N",   // checkout do Pacote Completo (US$10)
-  checkoutUrlUpsell: "https://pay.hotmart.com/O107370530N?bid=1788230794627&offDiscount=JOGA10" // checkout do Pacote Completo com desconto (US$9)
+  checkoutUrl17: "https://pay.hotmart.com/G107415375J",   // checkout do pacote Fundamentos (US$3.90)
+  checkoutUrl37: "https://pay.hotmart.com/O107370530N",   // checkout do Pacote Completo (US$6.90)
+  checkoutUrlUpsell: "https://pay.hotmart.com/O107370530N?bid=1788230794627&offDiscount=JOGA10" // checkout do Pacote Completo com 10% de desconto (US$6.21)
   // o cronômetro (header + oferta) sempre conta até 23:59 do dia atual — não precisa configurar
 };
 
@@ -1028,10 +1062,10 @@ function renderTimer(){
 renderTimer();
 setInterval(renderTimer, 1000);
 
-/* ---------- 4. Popup de upsell (R$17 -> R$33) ---------- */
+/* ---------- 4. Popup de upsell ($3.90 -> $6.90, con 10% dto: $6.21) ---------- */
 const upsellModal = document.getElementById('upsellModal');
 document.getElementById('btnOferta17').addEventListener('click', ()=>{
-  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Módulo Fundamentos', value:5, currency:'USD'});
+  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Módulo Fundamentos', value:3.90, currency:'USD'});
   upsellModal.classList.add('open');
 });
 document.getElementById('modalClose').addEventListener('click', ()=> upsellModal.classList.remove('open'));
@@ -1039,17 +1073,17 @@ upsellModal.addEventListener('click', (e)=>{ if(e.target === upsellModal) upsell
 
 document.getElementById('btnUpsellAccept').addEventListener('click', (e)=>{
   e.preventDefault();
-  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Paquete Completo (upsell)', value:9, currency:'USD'});
+  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Paquete Completo (upsell)', value:6.21, currency:'USD'});
   window.location.href = CONFIG.checkoutUrlUpsell;
 });
 document.getElementById('btnUpsellDecline').addEventListener('click', (e)=>{
   e.preventDefault();
-  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Módulo Fundamentos', value:5, currency:'USD'});
+  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Módulo Fundamentos', value:3.90, currency:'USD'});
   window.location.href = CONFIG.checkoutUrl17;
 });
 document.getElementById('btnOferta37').addEventListener('click', (e)=>{
   e.preventDefault();
-  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Paquete Completo', value:10, currency:'USD'});
+  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Paquete Completo', value:6.90, currency:'USD'});
   window.location.href = CONFIG.checkoutUrl37;
 });
 
@@ -1074,69 +1108,93 @@ if(heroVideo && heroPlayBtn){
   });
 }
 
-/* ---------- 5. Carrossel de exemplos (3 fotos + 3 vídeos) ---------- */
-const carouselData = [
-  {type:'image', src:'images/exemplo-1.jpg', label:'Captura · Ficha de ejercicio'},
-  {type:'video', src:'images/exemplo-4.mp4', label:'Video · Ejecución del ejercicio'},
-  {type:'image', src:'images/exemplo-2.jpg', label:'Captura · Mapa de evolución'},
-  {type:'video', src:'images/exemplo-5.mp4', label:'Video · Explicación técnica'},
-  {type:'image', src:'images/exemplo-3.jpg', label:'Captura · Entrenamiento por objetivo'},
-  {type:'video', src:'images/exemplo-6.mp4', label:'Video · Entrenamiento completo'}
-];
-const track = document.getElementById('carouselTrack');
-const dotsWrap = document.getElementById('cDots');
-carouselData.forEach((item,i)=>{
-  const slide = document.createElement('div');
-  slide.className = 'cslide';
-  if(item.type === 'image'){
-    slide.innerHTML = `<img src="${item.src}" alt="${item.label}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="media-fallback" style="display:none;">
-        <div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <p style="font-size:13px;">Coloca aquí <b>${item.src}</b></p>
-      </div>
-      <div class="cap">${item.label}</div>`;
-  } else {
-    slide.innerHTML = `<video src="${item.src}" muted loop autoplay playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-      <div class="media-fallback" style="display:none;">
-        <div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <p style="font-size:13px;">Coloca aquí <b>${item.src}</b></p>
-      </div>
-      <div class="cap">${item.label}</div>`;
+/* ---------- 5. Carrusel genérico (usado en "ejemplos" y "testimonios") ---------- */
+function initCarousel({trackId, dotsId, prevId, nextId, data, mobileVisible, desktopVisible, interval}){
+  const track = document.getElementById(trackId);
+  const dotsWrap = document.getElementById(dotsId);
+
+  data.forEach((item)=>{
+    const slide = document.createElement('div');
+    slide.className = 'cslide';
+    const cap = item.label ? `<div class="cap">${item.label}</div>` : '';
+    if(item.type === 'image'){
+      slide.innerHTML = `<img src="${item.src}" alt="${item.label||''}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="media-fallback" style="display:none;">
+          <div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <p style="font-size:13px;">Coloca aquí <b>${item.src}</b></p>
+        </div>
+        ${cap}`;
+    } else {
+      slide.innerHTML = `<video src="${item.src}" muted loop autoplay playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+        <div class="media-fallback" style="display:none;">
+          <div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <p style="font-size:13px;">Coloca aquí <b>${item.src}</b></p>
+        </div>
+        ${cap}`;
+    }
+    track.appendChild(slide);
+  });
+  // Garantiza que los videos del carrusel realmente comiencen a reproducirse
+  track.querySelectorAll('video').forEach(v=>{
+    const tryPlay = ()=> v.play().catch(()=>{});
+    tryPlay();
+    v.addEventListener('loadeddata', tryPlay);
+  });
+
+  function visibleCount(){ return window.innerWidth <= 640 ? mobileVisible : desktopVisible; }
+  function maxIndex(){ return Math.max(0, data.length - visibleCount()); }
+  let currentSlide = 0;
+
+  function buildDots(){
+    dotsWrap.innerHTML = '';
+    const count = maxIndex() + 1;
+    for(let i=0;i<count;i++){
+      const dot = document.createElement('div');
+      dot.className = 'cdot' + (i===0 ? ' active':'');
+      dot.addEventListener('click', ()=> goToSlide(i));
+      dotsWrap.appendChild(dot);
+    }
   }
-  track.appendChild(slide);
-});
-// Garante que os vídeos do carrossel realmente iniciem a reprodução
-track.querySelectorAll('video').forEach(v=>{
-  const tryPlay = ()=> v.play().catch(()=>{});
-  tryPlay();
-  v.addEventListener('loadeddata', tryPlay);
+  function goToSlide(i){
+    currentSlide = Math.min(Math.max(i,0), maxIndex());
+    const step = 100/visibleCount();
+    track.style.transform = `translateX(-${currentSlide*step}%)`;
+    [...dotsWrap.children].forEach((d,idx)=> d.classList.toggle('active', idx===currentSlide));
+  }
+  buildDots();
+  document.getElementById(prevId).addEventListener('click', ()=> goToSlide(currentSlide-1===-1 ? maxIndex() : currentSlide-1));
+  document.getElementById(nextId).addEventListener('click', ()=> goToSlide(currentSlide+1>maxIndex() ? 0 : currentSlide+1));
+  setInterval(()=> goToSlide(currentSlide+1>maxIndex() ? 0 : currentSlide+1), interval);
+  window.addEventListener('resize', ()=> { buildDots(); goToSlide(0); });
+}
+
+// Carrusel "Por dentro del material" — 2 por vez en desktop, 1 en mobile (tarjetas más grandes)
+initCarousel({
+  trackId:'carouselTrack', dotsId:'cDots', prevId:'cPrev', nextId:'cNext',
+  mobileVisible:1, desktopVisible:2, interval:4500,
+  data:[
+    {type:'image', src:'images/exemplo-1.jpg', label:'Captura · Ficha de ejercicio'},
+    {type:'video', src:'images/exemplo-4.mp4', label:'Video · Ejecución del ejercicio'},
+    {type:'image', src:'images/exemplo-2.jpg', label:'Captura · Mapa de evolución'},
+    {type:'video', src:'images/exemplo-5.mp4', label:'Video · Explicación técnica'},
+    {type:'image', src:'images/exemplo-3.jpg', label:'Captura · Entrenamiento por objetivo'},
+    {type:'video', src:'images/exemplo-6.mp4', label:'Video · Entrenamiento completo'}
+  ]
 });
 
-function buildDots(){
-  dotsWrap.innerHTML = '';
-  const count = Math.max(0, carouselData.length - visibleCount()) + 1;
-  for(let i=0;i<count;i++){
-    const dot = document.createElement('div');
-    dot.className = 'cdot' + (i===0 ? ' active':'');
-    dot.addEventListener('click', ()=> goToSlide(i));
-    dotsWrap.appendChild(dot);
-  }
-}
-buildDots();
+// Carrusel de testimonios — 5 capturas pasando, 3 por vez en desktop, 2 en mobile
+initCarousel({
+  trackId:'testiTrack', dotsId:'tDots', prevId:'tPrev', nextId:'tNext',
+  mobileVisible:2, desktopVisible:3, interval:4000,
+  data:[
+    {type:'image', src:'images/depoimento-1.jpg', label:'Testimonio de alumno'},
+    {type:'image', src:'images/depoimento-2.jpg', label:'Testimonio de alumno'},
+    {type:'image', src:'images/depoimento-3.jpg', label:'Testimonio de alumno'},
+    {type:'image', src:'images/depoimento-4.jpg', label:'Testimonio de alumno'},
+    {type:'image', src:'images/depoimento-5.jpg', label:'Testimonio de alumno'}
+  ]
+});
 
-let currentSlide = 0;
-function visibleCount(){ return window.innerWidth <= 640 ? 2 : 3; }
-function maxIndex(){ return Math.max(0, carouselData.length - visibleCount()); }
-function goToSlide(i){
-  currentSlide = Math.min(Math.max(i,0), maxIndex());
-  const step = 100/visibleCount();
-  track.style.transform = `translateX(-${currentSlide*step}%)`;
-  [...dotsWrap.children].forEach((d,idx)=> d.classList.toggle('active', idx===currentSlide));
-}
-document.getElementById('cPrev').addEventListener('click', ()=> goToSlide(currentSlide-1===-1 ? maxIndex() : currentSlide-1));
-document.getElementById('cNext').addEventListener('click', ()=> goToSlide(currentSlide+1>maxIndex() ? 0 : currentSlide+1));
-let carouselAuto = setInterval(()=> goToSlide(currentSlide+1>maxIndex() ? 0 : currentSlide+1), 4000);
-window.addEventListener('resize', ()=> { buildDots(); goToSlide(0); });
 
 /* ---------- 6. FAQ ---------- */
 const faqData = [
@@ -1144,7 +1202,7 @@ const faqData = [
   {q:'¿Necesito equipo para entrenar?', a:'No. La mayoría de los entrenamientos usan el peso del cuerpo, un balón y un espacio mínimo — ya sea en casa, en la calle, en la cancha o en el gimnasio. Cada ejercicio indica el material necesario.'},
   {q:'¿Sirve para cualquier edad y nivel?', a:'Sí. El material está organizado por nivel y por objetivo, incluyendo videos separados por rango de edad, así que entrenas de acuerdo con tu momento.'},
   {q:'¿Y si no me gusta el contenido?', a:'Tienes 7 días de garantía incondicional. Si sientes que no es para ti, solo pide el reembolso — te devolvemos el 100% del valor, sin burocracia.'},
-  {q:'¿La oferta de $10 realmente vale más la pena?', a:'Sí. Mientras el Módulo Fundamentos cubre solo la base técnica, el Paquete Completo incluye todos los módulos, los 3 bonos exclusivos y los videos por edad — por menos de $1 más por módulo.'}
+  {q:'¿La oferta de $6.90 realmente vale más la pena?', a:'Sí. Mientras el Módulo Fundamentos cubre solo la base técnica, el Paquete Completo incluye todos los módulos, los 3 bonos exclusivos y los videos por edad — por muy poco más.'}
 ];
 const faqList = document.getElementById('faqList');
 faqData.forEach((item)=>{
