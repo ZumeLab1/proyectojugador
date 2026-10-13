@@ -786,39 +786,65 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   }
   .mobile-purchase-bar .mpb-inner {
     width: 100%; max-width: var(--maxw); margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
   }
   .mobile-purchase-bar .mpb-copy { display: flex; flex-direction: column; min-width: 0; gap: 2px; }
   .mobile-purchase-bar .mpb-label {
-    color: #e8eee5; font-size: 10px; line-height: 1.2; font-weight: 700;
+    color: #e8eee5; font-size: 9px; line-height: 1.2; font-weight: 700;
     letter-spacing: .045em; text-transform: uppercase; white-space: nowrap;
   }
   .mobile-purchase-bar .mpb-price-row {
-    display: flex; align-items: baseline; gap: 7px; white-space: nowrap;
+    display: flex; align-items: baseline; gap: 6px; white-space: nowrap;
   }
   .mobile-purchase-bar .mpb-old-price {
-    color: #9ca89a; font-size: 13px; line-height: 1;
+    color: #9ca89a; font-size: 12px; line-height: 1;
     text-decoration: line-through; text-decoration-thickness: 1.5px;
   }
   .mobile-purchase-bar .mpb-price {
-    color: var(--lime); font-family: var(--display); font-size: 25px; line-height: 1.05;
+    color: var(--lime); font-family: var(--display); font-size: 24px; line-height: 1.05;
+  }
+  .mobile-purchase-bar .mpb-action {
+    display: flex; flex: 0 0 auto; flex-direction: column; align-items: center;
+    justify-content: center; gap: 4px; min-width: 0;
+  }
+  .mobile-purchase-bar .mpb-timer-label {
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    color: #aeb9ac; font-size: 9px; line-height: 1; white-space: nowrap;
+  }
+  .mobile-purchase-bar .mpb-timer-label svg { width: 11px; height: 11px; stroke: var(--lime); flex: 0 0 auto; }
+  .mobile-purchase-bar .mpb-time {
+    color: var(--lime); font-weight: 700; font-variant-numeric: tabular-nums;
+    letter-spacing: .02em;
   }
   .mobile-purchase-bar .mpb-button {
-    flex: 0 0 auto; min-height: 42px; padding: 0 18px;
+    flex: 0 0 auto; min-height: 40px; padding: 0 16px;
     display: inline-flex; align-items: center; justify-content: center;
     border-radius: 100px; background: linear-gradient(180deg, var(--lime) 0%, var(--lime-2) 100%);
-    color: #0a1206; font-size: 12px; line-height: 1.2; font-weight: 800; text-align: center;
+    color: #0a1206; font-size: 11.5px; line-height: 1.2; font-weight: 800; text-align: center;
     box-shadow: 0 5px 18px -8px rgba(166, 255, 30, .55);
     white-space: nowrap;
   }
   .mobile-purchase-bar .mpb-button:active { transform: scale(.98); }
 
   @media (max-width: 759px) {
+    /* No mobile, removemos o cabeçalho fixo para reduzir a poluição visual. */
+    .topbar { display: none !important; }
+    html { scroll-padding-top: 16px; }
+    #garantia, #oferta { scroll-margin-top: 16px; }
     /* No fluxo vertical mobile, o pacote completo aparece antes do módulo simples. */
     .offers-grid .offer-card.featured { order: -1; }
     .offers-grid .offer-card:not(.featured) { order: 0; }
     .mobile-purchase-bar { display: block; }
-    body.has-mobile-purchase-bar { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+    body.has-mobile-purchase-bar { padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
+  }
+  @media (max-width: 360px) {
+    .mobile-purchase-bar { padding-left: 10px; padding-right: 10px; }
+    .mobile-purchase-bar .mpb-inner { gap: 7px; }
+    .mobile-purchase-bar .mpb-label { font-size: 8.5px; letter-spacing: .025em; }
+    .mobile-purchase-bar .mpb-old-price { font-size: 11px; }
+    .mobile-purchase-bar .mpb-price { font-size: 22px; }
+    .mobile-purchase-bar .mpb-button { padding: 0 12px; font-size: 11px; }
+    .mobile-purchase-bar .mpb-timer-label { font-size: 8.5px; }
   }
 
 </style>
@@ -1185,7 +1211,13 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
         <span class="mpb-price">$8.00</span>
       </span>
     </div>
-    <a href="#" class="mpb-button" id="mobilePurchaseButton">Comprar ahora</a>
+    <div class="mpb-action">
+      <span class="mpb-timer-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span>Termina en</span><span class="mpb-time" id="mpbTimer">00:00:00</span>
+      </span>
+      <a href="#" class="mpb-button" id="mobilePurchaseButton">Comprar ahora</a>
+    </div>
   </div>
 </div>
 
@@ -1240,6 +1272,7 @@ const tSec = document.getElementById('tSec');
 const tbHour = document.getElementById('tbHour');
 const tbMin = document.getElementById('tbMin');
 const tbSec = document.getElementById('tbSec');
+const mpbTimer = document.getElementById('mpbTimer');
 
 function timeUntilEndOfDay(){
   const now = new Date();
@@ -1259,6 +1292,7 @@ function renderTimer(){
   tbHour.textContent = String(h).padStart(2,'0');
   tbMin.textContent = String(m).padStart(2,'0');
   tbSec.textContent = String(s).padStart(2,'0');
+  if(mpbTimer) mpbTimer.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 renderTimer();
 setInterval(renderTimer, 1000);
