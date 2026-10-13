@@ -109,40 +109,43 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   /* Ambient background glows */
   .glow{position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; z-index:0;}
 
-  /* ---------- Header / CTA sticky ---------- */
+  /* ---------- Header / CTA sticky: visual mais limpo e alinhado ---------- */
   .topbar{
     position:sticky; top:0; z-index:60;
-    background:rgba(6,10,6,.85); backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
+    background:rgba(6,10,6,.95);
+    -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(166,255,30,.24);
+    box-shadow:0 8px 28px rgba(0,0,0,.12);
   }
-  .topbar-main{display:flex; align-items:center; height:56px; gap:12px; position:relative;}
-  @media(min-width:640px){ .topbar-main{height:62px;} }
-  .topbar-main .btn{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);}
-  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-size:20px; letter-spacing:.03em; flex-shrink:0;}
+  .topbar-main{
+    display:flex; align-items:center; justify-content:space-between;
+    min-height:62px; gap:18px; padding-top:8px; padding-bottom:8px;
+  }
+  .topbar-main .btn{
+    position:static; transform:none; margin-left:auto; min-height:40px;
+    padding:10px 18px; white-space:nowrap; flex-shrink:0;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-size:20px; letter-spacing:.03em; flex-shrink:0; min-width:0;}
   .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--lime); box-shadow:0 0 12px var(--lime);}
-  .brand-logo{height:30px; width:auto; display:block;}
-  @media(min-width:640px){ .brand-logo{height:34px;} }
+  .brand-logo{height:32px; width:auto; max-width:140px; object-fit:contain; display:block;}
   .brand-logo.footer-logo{height:46px;}
-  /* Barra de urgencia: fila propia, siempre visible (también en mobile) */
-  .topbar-urgency-row{border-top:1px solid var(--line); background:rgba(166,255,30,.05);}
+  /* Fila de urgência compacta e visualmente separada do botão principal */
+  .topbar-urgency-row{border-top:1px solid rgba(166,255,30,.12); background:rgba(166,255,30,.045);}
   .topbar-urgency-row .wrap{
-    display:flex; align-items:center; justify-content:center; gap:8px;
-    padding:6px 16px; flex-wrap:wrap; text-align:center;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    padding:7px 16px; text-align:center; min-height:36px;
   }
   .topbar-urgency{
-    display:flex; align-items:center; gap:8px; font-size:10.5px; color:var(--muted); font-weight:600;
-    flex-wrap:wrap; justify-content:center;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    min-width:0; font-size:11.5px; line-height:1.25; color:var(--muted); font-weight:600;
   }
+  .topbar-urgency > span{min-width:0;}
   .topbar-urgency b{color:var(--lime); font-family:var(--display); font-weight:400; letter-spacing:.03em;}
   .topbar-timer{
-    display:flex; align-items:center; gap:1px;
-    font-family:var(--display); font-size:12px; color:var(--lime); letter-spacing:.02em;
-    background:var(--lime-dark); padding:4px 10px; border-radius:100px; flex-shrink:0;
-  }
-  @media(min-width:640px){
-    .topbar-urgency{font-size:12.5px;}
-    .topbar-timer{font-size:13px; padding:5px 11px;}
-    .topbar-urgency-row .wrap{padding:7px 20px;}
+    display:flex; align-items:center; gap:1px; flex-shrink:0;
+    font-family:var(--display); font-size:12.5px; color:var(--lime); letter-spacing:.02em;
+    background:rgba(39,77,14,.76); border:1px solid rgba(166,255,30,.2);
+    padding:4px 10px; border-radius:100px; font-variant-numeric:tabular-nums;
   }
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -597,34 +600,227 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   #oferta .timer-box{background:var(--card); border:1px solid var(--lime-dark);}
   #oferta .timer-box .lbl{color:var(--muted);}
 
-  /* ---------- Toast de compra recente ---------- */
-  .purchase-toast{
-    position:fixed; left:16px; bottom:16px; z-index:55;
-    display:flex; align-items:flex-start; gap:12px;
-    max-width:340px; width:calc(100% - 32px);
-    background:var(--card); border:1px solid var(--line); border-radius:14px;
-    padding:14px 16px; box-shadow:0 16px 40px -14px rgba(0,0,0,.55);
-    transform:translateY(24px) scale(.97); opacity:0; pointer-events:none;
-    transition:transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease;
+  /* ---------- MOBILE-FIRST OVERRIDES: experiencia pensada para celular ---------- */
+  @media (max-width: 640px) {
+    html { scroll-padding-top: 106px; }
+    body { font-size: 14px; line-height: 1.5; }
+    .wrap { padding-left: 16px; padding-right: 16px; }
+    .section { padding: 42px 0; }
+    .section-compact { padding: 32px 0; }
+    .section-head { margin-bottom: 24px; }
+    .section-compact .section-head { margin-bottom: 18px; }
+    .section-head h2 { font-size: clamp(27px, 7.5vw, 34px); line-height: 1.04; margin-top: 9px; }
+    .section-head p { margin-top: 10px; font-size: 14px; line-height: 1.5; }
+    .eyebrow { font-size: 10px; letter-spacing: .12em; gap: 6px; }
+    .eyebrow::before { width: 13px; }
+    .btn { min-height: 46px; padding: 12px 16px; font-size: 13px; line-height: 1.25; }
+
+    /* Cabeçalho mobile: uma linha de identidade/CTA e uma faixa curta de oferta */
+    .topbar-main { min-height: 50px; gap: 8px; padding-top: 6px; padding-bottom: 6px; }
+    .topbar-main .brand { min-width: 0; }
+    .brand-logo { height: 25px; max-width: 88px; object-fit: contain; }
+    .topbar-main .btn {
+      padding: 8px 11px; min-height: 36px; max-width: none; text-align: center;
+      font-size: clamp(9.5px, 2.8vw, 11px); line-height: 1.15; white-space: nowrap;
+      border-radius: 100px; box-shadow:0 5px 16px -8px rgba(166,255,30,.55);
+    }
+    .topbar-urgency-row .wrap { padding: 5px 13px; min-height: 32px; justify-content:center; }
+    .topbar-urgency { width:100%; justify-content:space-between; gap:6px; flex-wrap:nowrap; font-size:clamp(8.5px, 2.5vw, 10px); line-height:1.2; }
+    .topbar-urgency > span { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; text-align:left; }
+    .topbar-timer { padding: 3px 7px; font-size: 10.5px; }
+
+    /* Hero: hierarquia mais direta e mídia dimensionada para o viewport */
+    .hero { padding: 34px 0 38px; }
+    .hero-copy { width: 100%; max-width: 520px; }
+    .hero h1 { max-width: 440px; margin: 0 auto; font-size: clamp(28px, 8.1vw, 37px); line-height: 1.04; letter-spacing: 0; }
+    .hero h1 br { display: none; }
+    .hero h1 .line2 { display: inline; }
+    .hero-stats { gap: 8px; margin: 18px 0 18px; }
+    .stat-chip { flex: 1 1 calc(50% - 4px); min-width: 0; justify-content: center; gap: 7px; padding: 9px 8px; border-radius: 13px; }
+    .stat-chip .ico { width: 26px; height: 26px; }
+    .stat-chip .ico svg { width: 14px; height: 14px; }
+    .stat-chip .num { font-size: 18px; }
+    .stat-chip .lbl { font-size: 9.5px; letter-spacing: .02em; }
+    .hero-media { width: min(72vw, 270px); max-width: 270px; margin: 20px auto 22px; }
+    .media-frame { border-radius: 16px; }
+    .hero-play-btn { width: 56px; height: 56px; }
+    .hero-cta-row { display: flex; width: 100%; gap: 10px; }
+    .hero-cta-row .btn { width: 100%; }
+    .hero-note { margin-top: 12px; gap: 6px; font-size: 11.5px; line-height: 1.35; }
+
+    /* Conteúdo e bônus: cartões mais leves, com menos altura por tela */
+    .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .section-compact .cards-grid { gap: 10px; }
+    .rcard { border-radius: 12px; }
+    .rcard .img-wrap { aspect-ratio: 4 / 3; }
+    .rcard .img-wrap .icon-wrap { width: 44px; height: 44px; border-radius: 11px; }
+    .rcard .img-wrap .icon-wrap svg { width: 22px; height: 22px; }
+    .section-compact .rcard .img-caption { padding: 9px 8px 10px; }
+    .section-compact .rcard .num { font-size: 14px; }
+    .section-compact .rcard .tag { font-size: 9px; padding: 4px 7px; }
+    .bonus-grid { gap: 14px; }
+    .bonus-card { padding: 17px 15px; border-radius: 15px; }
+    .bonus-card .badge { top: -10px; left: 15px; font-size: 9px; padding: 4px 10px; }
+    .bonus-img-wrap { aspect-ratio: 16 / 9; margin-bottom: 11px; border-radius: 10px; }
+    .section-compact .bonus-card { padding: 17px 15px; }
+    .section-compact .bonus-card h3 { font-size: 15px; line-height: 1.25; }
+    .section-compact .bonus-card p { font-size: 12.5px; line-height: 1.45; }
+
+    /* Seção solicitada: resumo visual de leitura rápida no celular.
+       O texto integral continua no HTML e permanece visível em telas maiores. */
+    #por-que-pj { padding: 28px 0 30px; }
+    #por-que-pj .section-head { margin-bottom: 14px; }
+    #por-que-pj .section-head h2 { max-width: 330px; margin: 8px auto 0; font-size: clamp(25px, 7vw, 31px); line-height: 1.03; }
+    #por-que-pj .section-head p { display: none; }
+    #por-que-pj .benefits-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    #por-que-pj .bcard { min-width: 0; padding: 12px 10px; border-radius: 11px; }
+    #por-que-pj .bcard .icon-wrap { display: none; }
+    #por-que-pj .bcard h3 { margin: 0; font-size: 12px; line-height: 1.28; letter-spacing: 0; }
+    #por-que-pj .bcard p { display: none; }
+    #por-que-pj .who-for { display: none; }
+
+    /* Garantia e oferta: prioridade para legibilidade e botões fáceis de tocar */
+    #garantia { scroll-margin-top: 106px; }
+    .guarantee { grid-template-columns: 1fr; gap: 17px; padding: 24px 17px; border-radius: 18px; }
+    .seal { width: 108px; height: 108px; }
+    .seal .inner { width: 88px; height: 88px; }
+    .seal .inner .n { font-size: 30px; }
+    .seal .inner .t { font-size: 8.5px; }
+    .guarantee-copy h2 { font-size: 27px; line-height: 1.06; margin-bottom: 10px; }
+    .guarantee-copy p { font-size: 13px; line-height: 1.55; }
+    #oferta { scroll-margin-top: 106px; }
+    #oferta .section-head { margin-bottom: 20px; }
+    .timer-box { margin-bottom: 26px; padding: 14px 10px; border-radius: 13px; }
+    .timer-box .lbl { font-size: 10.5px; margin-bottom: 8px; }
+    .timer-clock { gap: 5px; }
+    .timer-clock .seg { min-width: 0; width: 58px; padding: 7px 3px; border-radius: 8px; font-size: 24px; }
+    .timer-clock .colon { font-size: 19px; }
+    .offers-grid { gap: 16px; }
+    .offer-card { padding: 25px 18px 19px; border-radius: 17px; }
+    .offer-card.featured::before { font-size: 9px; padding: 5px 12px; }
+    .offer-card .oname { font-size: 13px; }
+    .offer-card .oprice-row { gap: 8px; margin: 10px 0 3px; }
+    .offer-card .ofrom { font-size: 12px; }
+    .offer-card .oprice { font-size: 42px; }
+    .offer-card.featured .oprice { font-size: 44px; }
+    .offer-card .oprice .cents { font-size: 18px; }
+    .offer-card .oinstallment { margin-bottom: 16px; font-size: 11px; }
+    .offer-list { gap: 10px; margin-bottom: 15px; }
+    .offer-list li { gap: 8px; font-size: 12.5px; line-height: 1.4; }
+    .offer-list li svg { width: 15px; height: 15px; margin-top: 1px; }
+    .offer-list li .li-price { font-size: 10px; }
+    .offer-total-row { padding-top: 12px; margin-bottom: 16px; font-size: 12px; }
+    .offer-total-row .offer-total-value { font-size: 16px; }
+    .offer-card .btn { font-size: 12.5px; }
+    .offer-guarantee-line { margin-top: 24px; gap: 8px; font-size: 11.5px; line-height: 1.4; text-align: center; }
+    .offer-guarantee-line svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* Popup responsivo: cabe em telas pequenas sem cortar preço ou CTA */
+    .modal-overlay { padding: 12px; overflow-y: auto; align-items: center; }
+    .modal-box { width: 100%; max-width: 420px; max-height: calc(100dvh - 24px); overflow-y: auto; padding: 28px 18px 22px; border-radius: 18px; }
+    .modal-close { width: 38px; height: 38px; top: 9px; right: 9px; }
+    .modal-box .eyebrow { margin-bottom: 8px; }
+    .modal-box h3 { padding: 0 12px; font-size: 22px; line-height: 1.08; }
+    .modal-box p { font-size: 13px; line-height: 1.5; margin-bottom: 15px; }
+    .modal-price-row { gap: 8px; margin-bottom: 4px; }
+    .modal-price-row .from { font-size: 13px; }
+    .modal-price-row .to { font-size: 36px; }
+    .modal-box .save-tag { font-size: 11px; margin-bottom: 15px; }
+    .modal-box .btn { margin-bottom: 8px; }
+    .modal-decline { font-size: 11.5px; line-height: 1.4; }
+
+    /* Carrosséis, FAQ e rodapé: alvos táteis confortáveis sem excesso de espaço */
+    .carousel-track { gap: 10px; }
+    .cslide { border-radius: 12px; }
+    #testiTrack .cslide { flex-basis: calc((100% - 10px) / 2); min-width: calc((100% - 10px) / 2); }
+    .cslide .cap { padding: 8px; font-size: 9.5px; line-height: 1.3; }
+    .carousel-nav { gap: 12px; margin-top: 14px; }
+    .cnav-btn { width: 44px; height: 44px; }
+    .cdots { gap: 6px; }
+    .faq-list { gap: 9px; }
+    .faq-q { gap: 10px; padding: 15px 14px; font-size: 13px; line-height: 1.4; }
+    .faq-q .plus { width: 21px; height: 21px; }
+    .faq-a-inner { padding: 0 14px 15px; font-size: 12.5px; line-height: 1.55; }
+    .final-cta h2 { font-size: clamp(27px, 7.5vw, 34px); margin-bottom: 12px; }
+    .final-cta p { margin-bottom: 20px; font-size: 13px; }
+    footer { padding: 26px 0; }
+    .brand-logo.footer-logo { height: 38px; }
+    footer p { font-size: 11px; }
   }
-  .purchase-toast.show{ transform:translateY(0) scale(1); opacity:1; pointer-events:auto; }
-  .purchase-toast .pt-ico{
-    width:38px; height:38px; border-radius:50%; background:var(--lime-dark);
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+
+  @media (max-width: 380px) {
+    .wrap { padding-left: 13px; padding-right: 13px; }
+    .topbar-main .btn { max-width: none; padding: 8px 9px; font-size: 9.5px; }
+    .hero h1 { font-size: 27px; }
+    .stat-chip { padding: 8px 6px; gap: 5px; }
+    .stat-chip .lbl { font-size: 9px; }
+    .offer-card { padding-left: 15px; padding-right: 15px; }
+    .offer-list li { font-size: 12px; }
+    #por-que-pj .bcard { padding: 11px 8px; }
+    #por-que-pj .bcard h3 { font-size: 11.5px; }
   }
-  .purchase-toast .pt-ico svg{width:18px; height:18px; stroke:var(--lime);}
-  .purchase-toast .pt-body{flex:1; min-width:0;}
-  .purchase-toast .pt-title{font-size:13.5px; font-weight:600; color:var(--ink); line-height:1.35;}
-  .purchase-toast .pt-title b{color:var(--lime); font-weight:700;}
-  .purchase-toast .pt-sub{margin-top:3px; font-size:12px; color:var(--muted);}
-  .purchase-toast .pt-close{
-    flex-shrink:0; width:22px; height:22px; border-radius:50%; background:transparent;
-    color:var(--muted); font-size:16px; line-height:1; display:flex; align-items:center; justify-content:center;
+
+  /* Barra fixa de compra: aparece depois que a pessoa começa a percorrer a página. */
+  .mobile-purchase-bar {
+    display: none;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 70;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: rgba(6, 10, 6, .96);
+    border-top: 1px solid rgba(166, 255, 30, .42);
+    box-shadow: 0 -10px 28px rgba(0, 0, 0, .2);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(100%);
+    pointer-events: none;
+    transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
   }
-  .purchase-toast .pt-close:hover{color:var(--ink);}
-  @media(max-width:480px){
-    .purchase-toast{ left:12px; right:12px; bottom:12px; width:auto; max-width:none; }
+  .mobile-purchase-bar.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
   }
+  .mobile-purchase-bar .mpb-inner {
+    width: 100%; max-width: var(--maxw); margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .mobile-purchase-bar .mpb-copy { display: flex; flex-direction: column; min-width: 0; gap: 2px; }
+  .mobile-purchase-bar .mpb-label {
+    color: #e8eee5; font-size: 10px; line-height: 1.2; font-weight: 700;
+    letter-spacing: .045em; text-transform: uppercase; white-space: nowrap;
+  }
+  .mobile-purchase-bar .mpb-price-row {
+    display: flex; align-items: baseline; gap: 7px; white-space: nowrap;
+  }
+  .mobile-purchase-bar .mpb-old-price {
+    color: #9ca89a; font-size: 13px; line-height: 1;
+    text-decoration: line-through; text-decoration-thickness: 1.5px;
+  }
+  .mobile-purchase-bar .mpb-price {
+    color: var(--lime); font-family: var(--display); font-size: 25px; line-height: 1.05;
+  }
+  .mobile-purchase-bar .mpb-button {
+    flex: 0 0 auto; min-height: 42px; padding: 0 18px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 100px; background: linear-gradient(180deg, var(--lime) 0%, var(--lime-2) 100%);
+    color: #0a1206; font-size: 12px; line-height: 1.2; font-weight: 800; text-align: center;
+    box-shadow: 0 5px 18px -8px rgba(166, 255, 30, .55);
+    white-space: nowrap;
+  }
+  .mobile-purchase-bar .mpb-button:active { transform: scale(.98); }
+
+  @media (max-width: 759px) {
+    /* No fluxo vertical mobile, o pacote completo aparece antes do módulo simples. */
+    .offers-grid .offer-card.featured { order: -1; }
+    .offers-grid .offer-card:not(.featured) { order: 0; }
+    .mobile-purchase-bar { display: block; }
+    body.has-mobile-purchase-bar { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+  }
+
 </style>
 </head>
 <body>
@@ -790,7 +986,7 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
           <img src="images/bonus-1.jpg" alt="Mapa de Evolución" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
           <div class="bonus-icon" style="display:none;"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
         </div>
-        <div class="val">De $10 por</div>
+        <div class="val">De $5 por</div>
         <h3>Mapa de Evolución</h3>
         <p>Planificación de 4 semanas para guiar tu evolución continua, sin perderte en el camino.</p>
       </div>
@@ -800,7 +996,7 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
           <img src="images/bonus-2.jpg" alt="Inteligencia de Juego" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
           <div class="bonus-icon" style="display:none;"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.5"/></svg></div>
         </div>
-        <div class="val">De $8 por</div>
+        <div class="val">De $4 por</div>
         <h3>Inteligencia de Juego</h3>
         <p>Lectura de juego, toma de decisiones y posicionamiento — lo que separa a quien juega de quien entiende el juego.</p>
       </div>
@@ -810,7 +1006,7 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
           <img src="images/bonus-3.jpg" alt="+60 videos por edad" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
           <div class="bonus-icon" style="display:none;"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
         </div>
-        <div class="val">De $12 por</div>
+        <div class="val">De $6 por</div>
         <h3>+60 videos por edad</h3>
         <p>Contenido separado por rango de edad, para entrenar según el momento justo de tu evolución.</p>
       </div>
@@ -902,24 +1098,24 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
       <div class="offer-card featured">
         <span class="oname">Paquete Completo</span>
         <div class="oprice-row">
-          <span class="ofrom">$103</span>
-          <span class="oprice">$5<span class="cents">.00</span></span>
+          <span class="ofrom">$57</span>
+          <span class="oprice">$8<span class="cents">.00</span></span>
         </div>
         <span class="oinstallment">o en 12 cuotas con tarjeta</span>
         <ul class="offer-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">+300 ejercicios</span><span class="li-price">$15</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">+500 videos explicativos</span><span class="li-price">$22</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Entrenamientos individuales</span><span class="li-price">$10</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Entrenamientos por objetivo</span><span class="li-price">$10</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Mentalidad de atleta</span><span class="li-price">$8</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Nutrición y recuperación</span><span class="li-price">$8</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Mapa de Evolución <em style="color:var(--lime-dark); font-style:normal;">(bono)</em></span><span class="li-price">$10</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Inteligencia de Juego <em style="color:var(--lime-dark); font-style:normal;">(bono)</em></span><span class="li-price">$8</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">+60 videos por edad <em style="color:var(--lime-dark); font-style:normal;">(bono)</em></span><span class="li-price">$12</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">+300 ejercicios</span><span class="li-price">$10</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">+500 videos explicativos</span><span class="li-price">$12</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Entrenamientos individuales</span><span class="li-price">$6</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Entrenamientos por objetivo</span><span class="li-price">$6</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Mentalidad de atleta</span><span class="li-price">$4</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Nutrición y recuperación</span><span class="li-price">$4</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Mapa de Evolución <em style="color:var(--lime-dark); font-style:normal;">(bono)</em></span><span class="li-price">$5</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">Inteligencia de Juego <em style="color:var(--lime-dark); font-style:normal;">(bono)</em></span><span class="li-price">$4</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <span class="li-name">+60 videos por edad <em style="color:var(--lime-dark); font-style:normal;">(bono)</em></span><span class="li-price">$6</span></li>
         </ul>
         <div class="offer-total-row">
-          <span>Valor total</span>
-          <span class="offer-total-value">$103</span>
+          <span>Valor de referencia</span>
+          <span class="offer-total-value">$57</span>
         </div>
         <a href="#" class="btn btn-primary" id="btnOferta37">Quiero el Paquete Completo</a>
       </div>
@@ -940,8 +1136,8 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
     <h3>Estás a punto de entrenar<br>a medias</h3>
     <p>Adquiere ahora con <strong style="color:var(--ink)">10% de descuento</strong> el <strong style="color:var(--ink)">Paquete Completo</strong> — +300 ejercicios, +500 videos y todos los bonos. Oferta exclusiva liberada solo ahora, en esta página.</p>
     <div class="modal-price-row">
-      <span class="from">$5.00</span>
-      <span class="to">$4.50</span>
+      <span class="from">$8.00</span>
+      <span class="to">$7.20</span>
     </div>
     <div class="save-tag">10% de descuento solo por hoy</div>
     <a href="#" class="btn btn-primary" id="btnUpsellAccept">Sí, quiero el Paquete Completo</a>
@@ -979,13 +1175,18 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
   </div>
 </footer>
 
-<div class="purchase-toast" id="purchaseToast" role="status" aria-live="polite">
-  <span class="pt-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
-  <div class="pt-body">
-    <div class="pt-title"><b id="ptName"></b> acaba de comprar</div>
-    <div class="pt-sub" id="ptMeta"></div>
+<!-- Barra fixa de compra para celulares -->
+<div class="mobile-purchase-bar" id="mobilePurchaseBar" aria-hidden="true">
+  <div class="mpb-inner">
+    <div class="mpb-copy">
+      <span class="mpb-label">Paquete completo</span>
+      <span class="mpb-price-row">
+        <span class="mpb-old-price">$57</span>
+        <span class="mpb-price">$8.00</span>
+      </span>
+    </div>
+    <a href="#" class="mpb-button" id="mobilePurchaseButton">Comprar ahora</a>
   </div>
-  <button class="pt-close" id="ptClose" aria-label="Cerrar aviso">&times;</button>
 </div>
 
 <script>
@@ -994,8 +1195,8 @@ src="https://www.facebook.com/tr?id=1045422795156990&ev=PageView&noscript=1"
    ========================================================= */
 const CONFIG = {
   checkoutUrl17: "https://pay.hotmart.com/G107415375J",   // checkout do pacote Fundamentos (US$3.90)
-  checkoutUrl37: "https://pay.hotmart.com/O107370530N?checkoutMode=10",   // checkout do Pacote Completo (US$5.00)
-  checkoutUrlUpsell: "https://pay.hotmart.com/O107370530N?checkoutMode=10&offDiscount=JOGA10" // checkout do Pacote Completo com 10% de desconto (US$4.50)
+  checkoutUrl37: "https://pay.hotmart.com/O107370530N?checkoutMode=10",   // checkout do Pacote Completo (US$8.00; atualize o preço também na Hotmart)
+  checkoutUrlUpsell: "https://pay.hotmart.com/O107370530N?checkoutMode=10&offDiscount=JOGA10" // checkout do Pacote Completo com 10% de desconto (US$7.20; exige preço-base de US$8.00 na Hotmart)
   // o cronômetro (header + oferta) sempre conta até 23:59 do dia atual — não precisa configurar
 };
 
@@ -1062,18 +1263,44 @@ function renderTimer(){
 renderTimer();
 setInterval(renderTimer, 1000);
 
-/* ---------- 4. Popup de upsell ($3.90 -> $5.00, con 10% dto: $4.50) ---------- */
+/* ---------- 4. Popup de upsell ($3.90 -> $8.00, con 10% dto: $7.20) ---------- */
 const upsellModal = document.getElementById('upsellModal');
+const mobilePurchaseBar = document.getElementById('mobilePurchaseBar');
+const mobilePurchaseButton = document.getElementById('mobilePurchaseButton');
+
+function updateMobilePurchaseBar(){
+  if(!mobilePurchaseBar) return;
+  const isMobile = window.matchMedia('(max-width: 759px)').matches;
+  const modalIsOpen = upsellModal && upsellModal.classList.contains('open');
+  const hasScrolled = window.scrollY > Math.max(260, window.innerHeight * 0.45);
+  const shouldShow = isMobile && hasScrolled && !modalIsOpen;
+  mobilePurchaseBar.classList.toggle('is-visible', shouldShow);
+  mobilePurchaseBar.setAttribute('aria-hidden', String(!shouldShow));
+  document.body.classList.toggle('has-mobile-purchase-bar', shouldShow);
+}
+window.addEventListener('scroll', updateMobilePurchaseBar, {passive:true});
+window.addEventListener('resize', updateMobilePurchaseBar);
+updateMobilePurchaseBar();
+
 document.getElementById('btnOferta17').addEventListener('click', ()=>{
   if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Módulo Fundamentos', value:3.90, currency:'USD'});
   upsellModal.classList.add('open');
+  updateMobilePurchaseBar();
 });
-document.getElementById('modalClose').addEventListener('click', ()=> upsellModal.classList.remove('open'));
-upsellModal.addEventListener('click', (e)=>{ if(e.target === upsellModal) upsellModal.classList.remove('open'); });
+document.getElementById('modalClose').addEventListener('click', ()=>{
+  upsellModal.classList.remove('open');
+  updateMobilePurchaseBar();
+});
+upsellModal.addEventListener('click', (e)=>{
+  if(e.target === upsellModal){
+    upsellModal.classList.remove('open');
+    updateMobilePurchaseBar();
+  }
+});
 
 document.getElementById('btnUpsellAccept').addEventListener('click', (e)=>{
   e.preventDefault();
-  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Paquete Completo (upsell)', value:4.50, currency:'USD'});
+  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Paquete Completo (upsell)', value:7.20, currency:'USD'});
   window.location.href = CONFIG.checkoutUrlUpsell;
 });
 document.getElementById('btnUpsellDecline').addEventListener('click', (e)=>{
@@ -1083,9 +1310,18 @@ document.getElementById('btnUpsellDecline').addEventListener('click', (e)=>{
 });
 document.getElementById('btnOferta37').addEventListener('click', (e)=>{
   e.preventDefault();
-  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Paquete Completo', value:5.00, currency:'USD'});
+  if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Paquete Completo', value:8.00, currency:'USD'});
   window.location.href = CONFIG.checkoutUrl37;
 });
+
+/* CTA fixo mobile: leva ao checkout do Pacote Completo e mede o evento. */
+if(mobilePurchaseButton){
+  mobilePurchaseButton.addEventListener('click', (e)=>{
+    e.preventDefault();
+    if(typeof fbq==='function') fbq('track','InitiateCheckout',{content_name:'Paquete Completo - barra móvil', value:8.00, currency:'USD'});
+    window.location.href = CONFIG.checkoutUrl37;
+  });
+}
 
 /* ---------- 4b. Vídeo do Hero: só toca (com áudio) após clique ---------- */
 const heroVideo = document.getElementById('heroVideo');
@@ -1202,7 +1438,7 @@ const faqData = [
   {q:'¿Necesito equipo para entrenar?', a:'No. La mayoría de los entrenamientos usan el peso del cuerpo, un balón y un espacio mínimo — ya sea en casa, en la calle, en la cancha o en el gimnasio. Cada ejercicio indica el material necesario.'},
   {q:'¿Sirve para cualquier edad y nivel?', a:'Sí. El material está organizado por nivel y por objetivo, incluyendo videos separados por rango de edad, así que entrenas de acuerdo con tu momento.'},
   {q:'¿Y si no me gusta el contenido?', a:'Tienes 7 días de garantía incondicional. Si sientes que no es para ti, solo pide el reembolso — te devolvemos el 100% del valor, sin burocracia.'},
-  {q:'¿La oferta de $5.00 realmente vale más la pena?', a:'Sí. Mientras el Módulo Fundamentos cubre solo la base técnica, el Paquete Completo incluye todos los módulos, los 3 bonos exclusivos y los videos por edad — por muy poco más.'}
+  {q:'¿La oferta de $8.00 realmente vale más la pena?', a:'Sí. Mientras el Módulo Fundamentos cubre solo la base técnica, el Paquete Completo incluye todos los módulos, los 3 bonos exclusivos y los videos por edad — por muy poco más.'}
 ];
 const faqList = document.getElementById('faqList');
 faqData.forEach((item)=>{
@@ -1228,46 +1464,7 @@ faqData.forEach((item)=>{
   faqList.appendChild(el);
 });
 
-/* ---------- 7. Toast "compra recente" (prova social) ---------- */
-const ptFirstNames = ['Lucas','Gabriel','Matheus','Rafael','Bruno','Felipe','Thiago','Vitor','Guilherme','André','João','Pedro','Marcos','Diego','Rodrigo','Eduardo','Carlos','Daniel','Leonardo','Gustavo','Ana','Mariana','Juliana','Camila','Fernanda','Beatriz','Larissa','Amanda','Bianca','Carolina','Patrícia','Débora','Vanessa','Letícia','Aline'];
-function ptLastInitial(){
-  const letters = 'ABCDEFGHJKLMNPRSTV';
-  return letters[Math.floor(Math.random()*letters.length)] + '.';
-}
-function ptTimeAgo(){
-  const mins = Math.floor(Math.random()*28) + 1;
-  return mins === 1 ? 'hace 1 minuto' : `hace ${mins} minutos`;
-}
 
-const ptToast = document.getElementById('purchaseToast');
-const ptName = document.getElementById('ptName');
-const ptMeta = document.getElementById('ptMeta');
-let ptLastNameShown = '';
-let ptHideTimeout, ptNextTimeout;
-
-function ptShowNext(){
-  let name;
-  do { name = ptFirstNames[Math.floor(Math.random()*ptFirstNames.length)]; }
-  while(name === ptLastNameShown && ptFirstNames.length > 1);
-  ptLastNameShown = name;
-
-  ptName.textContent = `${name} ${ptLastInitial()}`;
-  ptMeta.textContent = ptTimeAgo();
-
-  ptToast.classList.add('show');
-  clearTimeout(ptHideTimeout);
-  ptHideTimeout = setTimeout(()=>{ ptToast.classList.remove('show'); }, 5500);
-
-  clearTimeout(ptNextTimeout);
-  const nextDelay = (Math.random()*10000) + 5000; // próxima aparição: 5–15s depois desta sumir
-  ptNextTimeout = setTimeout(ptShowNext, 5500 + nextDelay);
-}
-document.getElementById('ptClose').addEventListener('click', ()=>{
-  ptToast.classList.remove('show');
-  clearTimeout(ptHideTimeout);
-});
-// primeira aparição entre 4 e 8s depois de carregar a página
-setTimeout(ptShowNext, (Math.random()*4000) + 4000);
 </script>
 </body>
 </html>
